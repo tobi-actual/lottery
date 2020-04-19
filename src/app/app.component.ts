@@ -13,8 +13,8 @@ import { ID } from '@datorama/akita';
 })
 export class AppComponent implements OnInit {
   lotteryForm = this.formBuilder.group({
-    participants: [''],
-    previousWinners: [''],
+    participants: ['', {updateOn: 'blur'}],
+    previousWinners: ['', {updateOn: 'blur'}],
     lotteries: [''],
   });
 
