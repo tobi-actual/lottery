@@ -52,10 +52,20 @@
 
     <hr />
 
+
     <div class="row mt-5">
       <div class="col-6">
-        <div class="form-group">
           <label for="participants">Participants</label>
+      </div>
+
+      <div class="col-6">
+          <label for="previousWinners">Previous Lucky Winners</label>
+      </div>
+    </div>
+
+    <div class="row mt-1">
+      <div class="col-6">
+        <div class="form-group">
           <textarea
             formControlName="participants"
             class="form-control"
@@ -71,7 +81,6 @@
 
       <div class="col-6">
         <div class="form-group">
-          <label for="previousWinners">Previous Lucky Winners</label>
           <textarea
             formControlName="previousWinners"
             class="form-control"

@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
     });
 
     this.lotteryForm.controls.participants.valueChanges
-      .pipe(debounceTime(200))
+      .pipe(debounceTime(100))
       .subscribe((value) => {
         this.lotteryService.updateParticipants(value);
       });
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
     });
 
     this.lotteryForm.controls.previousWinners.valueChanges
-      .pipe(debounceTime(200))
+      .pipe(debounceTime(100))
       .subscribe((value) => {
         this.lotteryService.updatePreviousWinners(value);
       });
