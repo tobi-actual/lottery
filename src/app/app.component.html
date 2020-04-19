@@ -72,24 +72,20 @@
     <div class="row mt-5">
       <div class="col-7">
         <div class="form-group">
-          <label for="exampleFormControlSelect1">Lottery Lists</label>
+          <label for="exampleFormControlSelect1">Lotteries</label>
           <select
-            formControlName="lists"
+            formControlName="lotteries"
             class="form-control"
             id="exampleFormControlSelect1"
           >
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            <option *ngFor="let lotteryId of lotteryService.lotteryIDs$ | async" [ngValue]="lotteryId">{{lotteryId}}</option>
           </select>
         </div>
-        <button type="button" class="btn btn-outline-secondary">
-          Add List
+        <button (click)="addLottery()" type="button" class="btn btn-outline-secondary">
+          Add Lottery
         </button>
         <button type="button" class="btn btn-outline-danger ml-2">
-          Delete Current List
+          Delete Current Lottery
         </button>
       </div>
     </div>
