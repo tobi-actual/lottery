@@ -1,7 +1,7 @@
 <form [formGroup]="lotteryForm">
   <div class="container">
     <div class="row">
-      <div class="col-12 text-center">
+      <div class="col-12 mt-3 text-center">
         <h1>🎰 (PR) Lottery 🎰</h1>
       </div>
     </div>
@@ -22,7 +22,7 @@
       *ngIf="(lotteryService.currentWinners$ | async)?.length !== 0; $"
       class="row justify-content-center mt-5"
     >
-      <div class="col-10 text-center">
+      <div class="col-6 text-center">
         <div class="card border-success text-center">
           <h2 class="card-header bg-transparent border-success">🎉</h2>
           <div class="card-body">
@@ -107,20 +107,22 @@
           </select>
         </div>
 
-        <button
-          (click)="addLottery()"
-          type="button"
-          class="btn btn-outline-secondary"
-        >
-          Add Lottery
-        </button>
-        <button
-          (click)="lotteryService.deleteActiveLottery()"
-          type="button"
-          class="btn btn-outline-danger mt-2"
-        >
-          Delete Current Lottery
-        </button>
+        <div class="btn-toolbar">
+            <button
+              (click)="addLottery()"
+              type="button"
+              class="btn btn-outline-secondary mr-2"
+            >
+              Add Lottery
+            </button>
+            <button
+              (click)="lotteryService.deleteActiveLottery()"
+              type="button"
+              class="btn btn-outline-danger"
+            >
+              Delete Current Lottery
+            </button>
+        </div>
       </div>
     </div>
 
@@ -135,14 +137,14 @@
         <button
           (click)="lotteryService.exportState()"
           type="button"
-          class="btn btn-outline-primary"
+          class="btn btn-outline-primary mr-2"
         >
           Export Data
         </button>
 
-        <span class="ml-3">Import Data:</span>
+        <span class="mr-2">Import Data:</span>
         <input
-          class="btn btn-outline-secondary mt-2"
+          class="btn btn-outline-secondary"
           type="file"
           (change)="openFile($event)"
         />
