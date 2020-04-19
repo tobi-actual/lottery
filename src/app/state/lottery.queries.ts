@@ -2,9 +2,10 @@ import { QueryEntity } from '@datorama/akita';
 import { LotteryState, LotteryStore } from './lottery.store';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { Lottery } from './lottery.entity';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LotteriesQuery extends QueryEntity<LotteryState> {
   lotteryIDs$ = this.selectAll().pipe(
@@ -14,7 +15,6 @@ export class LotteriesQuery extends QueryEntity<LotteryState> {
       })
     )
   );
-
 
   constructor(protected store: LotteryStore) {
     super(store);

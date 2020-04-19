@@ -4,7 +4,7 @@ import { EntityState, EntityStore } from '@datorama/akita';
 import { Lottery } from './lottery.entity';
 import { Injectable } from '@angular/core';
 
-export interface LotteryState extends EntityState<Lottery, string>, ActiveState {}
+export interface LotteryState extends EntityState<Lottery>, ActiveState {}
 
 // export function createInitialState(): LotteryState {
 //   return {};

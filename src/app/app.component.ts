@@ -12,12 +12,6 @@ import { ID } from '@datorama/akita';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  // lotteryForm = new FormControl('');
-  // lotteryForm = new FormGroup({
-  //   firstName: new FormControl(''),
-  //   lastName: new FormControl(''),
-  // });
-
   lotteryForm = this.formBuilder.group({
     participants: [''],
     previousWinners: [''],
@@ -27,13 +21,7 @@ export class AppComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public lotteryService: LotteryService
-  ) {
-    // lotteryForm = this.formBuilder.group({
-    //   participants: [''],
-    //   previousWinners: [''],
-    //   lists: [''],
-    // });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.lotteryService.activeID$.subscribe((id) => {
@@ -53,16 +41,22 @@ export class AppComponent implements OnInit {
     });
 
     this.lotteryForm.controls.participants.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(200))
       .subscribe((value) => {
-        console.log(value);
         this.lotteryService.updateParticipants(value);
       });
-  }
 
-  onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.lotteryForm.value);
+    this.lotteryService.activePreviousWinners$.subscribe((list) => {
+      this.lotteryForm.patchValue({
+        previousWinners: list,
+      });
+    });
+
+    this.lotteryForm.controls.previousWinners.valueChanges
+      .pipe(debounceTime(200))
+      .subscribe((value) => {
+        this.lotteryService.updatePreviousWinners(value);
+      });
   }
 
   addLottery() {

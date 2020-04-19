@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LotteryList } from '../models/lists.model';
 import { ID } from '@datorama/akita';
-import { map, distinctUntilChanged } from 'rxjs/operators';
+import { map, distinctUntilChanged, filter, first, take } from 'rxjs/operators';
 import { LotteryStore } from '../state/lottery.store';
 import { LotteriesQuery } from '../state/lottery.queries';
 import { createLottery } from '../state/lottery.entity';
@@ -11,59 +11,121 @@ import { createLottery } from '../state/lottery.entity';
   providedIn: 'root',
 })
 export class LotteryService {
-  // lotteryLists$ = new BehaviorSubject<Map<String, LotteryList>>(undefined);
-  // currentList$ = new Observable<LotteryList>();
-  // activeList: string;
+  lotteryIDs$: Observable<string[]>;
 
-  lotteryIDs$: Observable<ID[]>;
-
-  activeID$: Observable<ID>;
+  activeID$: Observable<string>;
   activeParticipants$: Observable<string>;
   activePreviousWinners$: Observable<string>;
+
+  currentWinners$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(
+    []
+  );
 
   constructor(
     private lotteryStore: LotteryStore,
     private lotteriesQuery: LotteriesQuery
   ) {
-    this.lotteryStore.add(
-      createLottery({ id: 'default', participants: [], previousWinners: [] })
+    //Add some sample data, if there is none:
+    if (this.lotteriesQuery.getCount() === 0) {
+      this.lotteryStore.add(
+        createLottery({
+          id: 'default',
+          participants: [
+            'Tobi',
+            'Mr. White',
+            'Mr. Orange',
+            'Mr. Blonde',
+            'Mr. Pink',
+            'Mr. Blue',
+            'Mr. Brown',
+            'Leingschwendner Sepp',
+            'Saller Wolfi',
+            'Ziagla Fritz',
+            'Weber Max',
+          ],
+          previousWinners: [],
+        })
+      );
+
+      this.lotteryStore.setActive('default');
+    }
+
+    this.lotteryIDs$ = this.lotteriesQuery.lotteryIDs$.pipe(
+      map((id) => {
+        return id.map((entry) => {
+          return entry as string;
+        });
+      })
     );
 
-    this.lotteryStore.setActive('default');
+    this.activeID$ = this.lotteriesQuery.selectActiveId().pipe(
+      map((id) => {
+        return id as string;
+      })
+    );
 
-    // const initialList = new LotteryList();
-
-    // const listMap = new Map<String, LotteryList>();
-
-    // listMap.set('default', initialList);
-
-    // this.activeList = 'default';
-
-    // this.lotteryLists$.subscribe((lists) => {
-    //   const activeList = lists.get(this.activeList);
-    //   // this.activeList.
-    // });
-
-    // this.lotteryLists$.next(listMap);
-
-    this.lotteryIDs$ = this.lotteriesQuery.lotteryIDs$;
-
-    this.activeID$ = this.lotteriesQuery.selectActiveId();
     this.activeParticipants$ = this.lotteriesQuery.selectActive().pipe(
+      filter((x) => x !== undefined),
       map((lottery) => {
-        return lottery.participants.join(', ');
+        return this.convertArrayToString(lottery.participants);
       }),
       distinctUntilChanged()
     );
     this.activePreviousWinners$ = this.lotteriesQuery.selectActive().pipe(
+      filter((x) => x !== undefined),
       map((lottery) => {
-        return lottery.previousWinners.join(', ');
+        return this.convertArrayToString(lottery.previousWinners);
       }),
       distinctUntilChanged()
     );
   }
 
-  setActiveLottery(id: string) {
+  pickAWinner() {
+    const activeLottery = this.lotteriesQuery.getActive();
+
+    if (!activeLottery) {
+      alert('A lottery needs to be added first');
+      return;
+    }
+
+    let participants = activeLottery.participants;
+    let previousWinners = activeLottery.previousWinners;
+
+    if (participants.length === 0 && previousWinners.length > 0) {
+      // All participants won. Reset the list:
+      participants = [...previousWinners];
+      previousWinners = [];
+      this.currentWinners$.next([]);
+    }
+
+    const winnerId = Math.floor(Math.random() * participants.length);
+
+    // const winner = activeLottery.participants.splice(winnerId);
+
+    const winner = participants[winnerId];
+
+    const newParticipants = participants.filter(function (v, index) {
+      return index !== winnerId;
+    });
+
+    const newPreviousWinners = [...previousWinners, winner];
+
+    const winners = this.currentWinners$.value;
+    winners.push(winner);
+    this.currentWinners$.next(winners);
+
+    this.lotteryStore.updateActive({
+      participants: newParticipants,
+      previousWinners: newPreviousWinners,
+    });
+  }
+
+  resetWinners() {
+    this.currentWinners$.next([]);
+  }
+
+  setActiveLottery(id: ID) {
+    this.currentWinners$.next([]);
     this.lotteryStore.setActive(id);
   }
 
@@ -71,15 +133,42 @@ export class LotteryService {
     this.lotteryStore.add(
       createLottery({ id: id, participants: [], previousWinners: [] })
     );
+    this.lotteryStore.setActive(id);
+  }
+
+  deleteActiveLottery() {
+    const reallyDelete = confirm('Delete Lottery?');
+    if (reallyDelete) {
+      this.lotteryStore.remove(this.lotteriesQuery.getActiveId());
+      this.lotteriesQuery
+        .selectFirst()
+        .pipe(take(1))
+        .subscribe((first) => {
+          this.setActiveLottery(first.id);
+        });
+    }
   }
 
   updateParticipants(list: string) {
-    const convertedList = list.split(',').map((entry) => {
+    this.lotteryStore.updateActive({
+      participants: this.convertStringToArray(list),
+    });
+  }
+
+  updatePreviousWinners(list: string) {
+    this.lotteryStore.updateActive({
+      previousWinners: this.convertStringToArray(list),
+    });
+  }
+
+  private convertStringToArray(list: string) {
+    const array = list.split(',').map((entry) => {
       return entry.trim();
     });
+    return array.filter(Boolean);
+  }
 
-    this.lotteryStore.updateActive({
-      participants: convertedList,
-    });
+  private convertArrayToString(list: string[]): string {
+    return list.join(', ');
   }
 }
