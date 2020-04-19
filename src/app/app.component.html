@@ -1,24 +1,105 @@
-<div class="container">
-  <div class="row">
-    <div class="col-12 text-center">
-      <h1>🎰 PR Lottery 🎰</h1>
+<form [formGroup]="lotteryForm" (ngSubmit)="onSubmit()">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1>🎰 (PR) Lottery 🎰</h1>
+      </div>
     </div>
 
-    <div class="col-12 text-center mt-5">
-      <button type="button" class="btn btn-primary btn-lg">Large button</button>
+    <div class="row justify-content-center mt-5">
+      <div class="col-8 text-center">
+        <button type="button" class="btn btn-primary btn-xtra-lg">
+          Draw a Winner!
+        </button>
+      </div>
     </div>
 
-    <div class="col-12 text-center mt-5">
-      <button type="button" class="btn btn-primary btn-xtra-lg">
-        Large button
+    <div class="row justify-content-center mt-5">
+      <div class="col-10 text-center">
+        <div class="card border-success text-center">
+          <h2 class="card-header bg-transparent border-success">🎉</h2>
+          <div class="card-body">
+            <h3 class="card-title">Mr. White</h3>
+            <h3 class="card-title">Mr. Blue</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+      <div class="col-8 text-center">
+        <button type="button" class="btn btn-secondary btn-lg">
+          New Round
+        </button>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row mt-5">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="participants">Participants</label>
+          <textarea
+            formControlName="participants"
+            class="form-control"
+            id="participants"
+            rows="3"
+          ></textarea>
+          <small class="form-text text-muted"
+            >Enter the participants as a comma separated list</small
+          >
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="form-group">
+          <label for="previousWinners">Previous Lucky Winners</label>
+          <textarea
+            formControlName="previousWinners"
+            class="form-control"
+            id="previousWinners"
+            rows="3"
+          ></textarea>
+          <small class="form-text text-muted"
+            >When all participants won, everyone automatically gets another
+            chance to win</small
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-7">
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Lottery Lists</label>
+          <select
+            formControlName="lists"
+            class="form-control"
+            id="exampleFormControlSelect1"
+          >
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn-outline-secondary">
+          Add List
+        </button>
+        <button type="button" class="btn btn-outline-danger ml-2">
+          Delete Current List
+        </button>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <p>All data is stored in the browser localStorage</p>
+      <button type="button" class="btn btn-outline-primary">Export Data</button>
+      <button type="button" class="btn btn-outline-secondary">
+        Import Data
       </button>
     </div>
-
-    <div class="col-sm">
-      One of three columns
-    </div>
-    <div class="col-sm">
-      One of three columns
-    </div>
   </div>
-</div>
+</form>
