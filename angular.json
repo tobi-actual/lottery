@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "pr-lottery"
+    }
+  },
+  "defaultProject": "pr-lottery",
+  "cli": {
+    "defaultCollection": "@datorama/akita"
+  }
 }
