@@ -63,4 +63,16 @@ export class AppComponent implements OnInit {
     const lotteryId = prompt('Please enter the lottery name');
     this.lotteryService.addLottery(lotteryId);
   }
+
+  openFile($event) {
+    const file: File = $event.target.files[0];
+    const reader: FileReader = new FileReader();
+
+    reader.onloadend = (event: any) => {
+      // FileReaderProgressEvent type issue: https://github.com/Microsoft/TypeScript/issues/25510
+      this.lotteryService.importState(JSON.parse(event.target.result));
+    };
+
+    reader.readAsText(file);
+  }
 }

@@ -95,7 +95,9 @@
             formControlName="lotteries"
             class="form-control"
             id="lotteriesSelect"
-            [attr.disabled]="(lotteryService.activeID$ | async) ? null : ''"
+            [attr.disabled]="
+              (lotteryService.lotteryIDs$ | async)?.length > 0 ? null : ''
+            "
           >
             <option
               *ngFor="let lotteryId of lotteryService.lotteryIDs$ | async"
@@ -123,11 +125,28 @@
     </div>
 
     <div class="row mt-5">
-      <p>All data is stored in the browser localStorage</p>
-      <button type="button" class="btn btn-outline-primary">Export Data</button>
-      <button type="button" class="btn btn-outline-secondary">
-        Import Data
-      </button>
+      <div class="col-12">
+        <p>All data is stored in the browser localStorage</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <button
+          (click)="lotteryService.exportState()"
+          type="button"
+          class="btn btn-outline-primary"
+        >
+          Export Data
+        </button>
+
+        <span class="ml-3">Import Data:</span>
+        <input
+          class="btn btn-outline-secondary"
+          type="file"
+          (change)="openFile($event)"
+        />
+      </div>
     </div>
   </div>
 </form>

@@ -6,6 +6,8 @@ import { map, distinctUntilChanged, filter, first, take } from 'rxjs/operators';
 import { LotteryStore } from '../state/lottery.store';
 import { LotteriesQuery } from '../state/lottery.queries';
 import { createLottery } from '../state/lottery.entity';
+import { snapshotManager } from '@datorama/akita';
+import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root',
@@ -142,7 +144,10 @@ export class LotteryService {
       this.lotteryStore.remove(this.lotteriesQuery.getActiveId());
       this.lotteriesQuery
         .selectFirst()
-        .pipe(take(1))
+        .pipe(
+          take(1),
+          filter((x) => x !== undefined)
+        )
         .subscribe((first) => {
           this.setActiveLottery(first.id);
         });
@@ -170,5 +175,19 @@ export class LotteryService {
 
   private convertArrayToString(list: string[]): string {
     return list.join(', ');
+  }
+
+  exportState() {
+    const blob: Blob = new Blob(
+      [JSON.stringify(snapshotManager.getStoresSnapshot(), null, 2)],
+      {
+        type: 'text/plain;charset=utf-8',
+      }
+    );
+    saveAs(blob, 'lotteries.json', true);
+  }
+
+  importState(stores?: string[]) {
+    snapshotManager.setStoresSnapshot(stores);
   }
 }
