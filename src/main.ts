@@ -11,7 +11,7 @@ if (environment.production) {
   enableAkitaProdMode();
 }
 
-// persistState({ preStorageUpdateOperator: () => debounceTime(1000) });
+persistState({ preStorageUpdateOperator: () => debounceTime(1000) });
 
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
