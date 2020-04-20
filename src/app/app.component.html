@@ -1,13 +1,13 @@
 <form [formGroup]="lotteryForm">
   <div class="container">
     <div class="row">
-      <div class="col-12 mt-3 text-center">
-        <h1>safdsfdafasfas🎰</h1>
+      <div class="col-sm-12 mt-3 text-center">
+        <h1>🎰(PR) Lottery🎰</h1>
       </div>
     </div>
 
     <div class="row justify-content-center mt-5">
-      <div class="col-8 text-center">
+      <div class="col-sm-8 text-center">
         <button
           (click)="lotteryService.pickAWinner()"
           type="button"
@@ -22,7 +22,7 @@
       *ngIf="(lotteryService.currentWinners$ | async)?.length !== 0; $"
       class="row justify-content-center mt-5"
     >
-      <div class="col-6 text-center">
+      <div class="col-sm-8 col-lg-6 text-center">
         <div class="card border-success text-center">
           <h2 class="card-header bg-transparent border-success">🎉</h2>
           <div class="card-body">
@@ -38,7 +38,7 @@
     </div>
 
     <div class="row justify-content-center mt-5">
-      <div class="col-8 text-center">
+      <div class="col-sm-8 text-center">
         <button
           (click)="lotteryService.resetWinners()"
           type="button"
@@ -54,17 +54,17 @@
 
 
     <div class="row mt-5">
-      <div class="col-6">
+      <div class="col-sm-6">
           <label for="participants">Participants</label>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
           <label for="previousWinners">Previous Lucky Winners</label>
       </div>
     </div>
 
     <div class="row mt-1">
-      <div class="col-6">
+      <div class="col-sm-6">
         <div class="form-group">
           <textarea
             formControlName="participants"
@@ -79,7 +79,7 @@
         </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
         <div class="form-group">
           <textarea
             formControlName="previousWinners"
@@ -97,7 +97,7 @@
     </div>
 
     <div class="row mt-5">
-      <div class="col-7">
+      <div class="col-sm-7">
         <div class="form-group">
           <label for="lotteriesSelect">Lotteries</label>
           <select
@@ -136,13 +136,13 @@
     </div>
 
     <div class="row mt-5">
-      <div class="col-12">
+      <div class="col-sm-12">
         <p>All data is stored in the browser localStorage</p>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-12">
+      <div class="col-sm-12">
         <button
           (click)="lotteryService.exportState()"
           type="button"
