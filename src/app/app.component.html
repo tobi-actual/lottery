@@ -88,10 +88,18 @@
             rows="3"
             [attr.disabled]="(lotteryService.activeID$ | async) ? null : ''"
           ></textarea>
-          <small class="form-text text-muted"
+          <small class="form-text text-muted mb-2"
             >When all participants won, everyone automatically gets another
             chance to win</small
           >
+          <button
+          (click)="lotteryService.resetLottery()"
+          [attr.disabled]="(lotteryService.activeID$ | async) ? null : ''"
+          type="button"
+          class="btn btn-outline-secondary mr-2"
+        >
+          Put everyone back now
+        </button>
         </div>
       </div>
     </div>
@@ -146,7 +154,7 @@
         <button
           (click)="lotteryService.exportState()"
           type="button"
-          class="btn btn-outline-primary mr-2"
+          class="btn btn-outline-primary mr-2 mb-2"
         >
           Export Data
         </button>

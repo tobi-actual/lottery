@@ -122,6 +122,27 @@ export class LotteryService {
     });
   }
 
+  resetLottery() {
+    const activeLottery = this.lotteriesQuery.getActive();
+
+    if (!activeLottery) {
+      return;
+    }
+
+    let participants = activeLottery.participants;
+    let previousWinners = activeLottery.previousWinners;
+
+    // Reset the list:
+    const newPparticipants = [...participants, ...previousWinners];
+    const newPreviousWinners = [];
+    this.currentWinners$.next([]);
+
+    this.lotteryStore.updateActive({
+      participants: newPparticipants,
+      previousWinners: newPreviousWinners,
+    });
+  }
+
   resetWinners() {
     this.currentWinners$.next([]);
   }
