@@ -1,6 +1,6 @@
 {
-  "name": "pr-lottery",
-  "short_name": "pr-lottery",
+  "name": "lottery",
+  "short_name": "lottery",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

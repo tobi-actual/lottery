@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "pr-lottery": {
+    "lottery": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/pr-lottery",
+            "outputPath": "dist/lottery",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -69,18 +69,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "pr-lottery:build"
+            "browserTarget": "lottery:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "pr-lottery:build:production"
+              "browserTarget": "lottery:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "pr-lottery:build"
+            "browserTarget": "lottery:build"
           }
         },
         "test": {
@@ -118,18 +118,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "pr-lottery:serve"
+            "devServerTarget": "lottery:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "pr-lottery:serve:production"
+              "devServerTarget": "lottery:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "pr-lottery",
+  "defaultProject": "lottery",
   "cli": {
     "defaultCollection": "@datorama/akita"
   }

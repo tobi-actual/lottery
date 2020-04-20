@@ -19,7 +19,7 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('.content span').textContent).toContain(
-      'pr-lottery app is running!'
+      'lottery app is running!'
     );
   });
 });
