@@ -13,8 +13,8 @@ import { ID } from '@datorama/akita';
 })
 export class AppComponent implements OnInit {
   lotteryForm = this.formBuilder.group({
-    participants: ['', {updateOn: 'blur'}],
-    previousWinners: ['', {updateOn: 'blur'}],
+    participants: ['', { updateOn: 'blur' }],
+    previousWinners: ['', { updateOn: 'blur' }],
     lotteries: [''],
   });
 
@@ -60,8 +60,11 @@ export class AppComponent implements OnInit {
   }
 
   addLottery() {
-    const lotteryName = prompt('Please enter the lottery name');
-    this.lotteryService.addLottery(lotteryName);
+    this.lotteryService.addLottery();
+  }
+
+  renameLottery() {
+    this.lotteryService.renameLottery();
   }
 
   openFile($event) {

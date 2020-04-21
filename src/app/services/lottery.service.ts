@@ -35,14 +35,12 @@ export class LotteryService {
           participants: [
             'Tobi',
             'Mr. White',
-            'Mr. Orange',
-            'Mr. Blonde',
-            'Mr. Pink',
-            'Mr. Blue',
-            'Mr. Brown',
-            'Leingschwendner Sepp',
-            'Saller Wolfi',
             'Ziagla Fritz',
+            'Mr. Pink',
+            'Leingschwendner Sepp',
+            'Mr. Blue',
+            'Mr. Orange',
+            'Saller Wolfi',
             'Weber Max',
           ],
           previousWinners: [],
@@ -146,17 +144,36 @@ export class LotteryService {
     this.lotteryStore.setActive(id);
   }
 
-  addLottery(name: string) {
+  addLottery() {
+    const lotteryName = prompt('Please enter the lottery name');
+
     const id = guid();
     this.lotteryStore.add(
       createLottery({
         id: id,
-        name: name,
+        name: lotteryName,
         participants: [],
         previousWinners: [],
       })
     );
     this.lotteryStore.setActive(id);
+  }
+
+  renameLottery() {
+    const activeLottery = this.lotteriesQuery.getActive();
+
+    if (!activeLottery) {
+      return;
+    }
+
+    const newName = prompt(
+      'Please enter the new lottery name',
+      activeLottery.name
+    );
+
+    this.lotteryStore.updateActive({
+      name: newName,
+    });
   }
 
   deleteActiveLottery() {
