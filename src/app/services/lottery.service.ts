@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { LotteryList } from '../models/lists.model';
-import { ID } from '@datorama/akita';
-import { map, distinctUntilChanged, filter, first, take } from 'rxjs/operators';
-import { LotteryStore } from '../state/lottery.store';
-import { LotteriesQuery } from '../state/lottery.queries';
-import { createLottery } from '../state/lottery.entity';
-import { snapshotManager } from '@datorama/akita';
+import { ID, snapshotManager, guid } from '@datorama/akita';
 import { saveAs } from 'file-saver';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { distinctUntilChanged, filter, map, take } from 'rxjs/operators';
+import { createLottery, LotteryID } from '../state/lottery.entity';
+import { LotteriesQuery } from '../state/lottery.queries';
+import { LotteryStore } from '../state/lottery.store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LotteryService {
-  lotteryIDs$: Observable<string[]>;
+  lotteryIDs$: Observable<LotteryID[]>;
 
   activeID$: Observable<string>;
   activeParticipants$: Observable<string>;
@@ -29,9 +27,11 @@ export class LotteryService {
   ) {
     //Add some sample data, if there is none:
     if (this.lotteriesQuery.getCount() === 0) {
+      const id = guid();
       this.lotteryStore.add(
         createLottery({
-          id: 'default',
+          id: id,
+          name: 'example',
           participants: [
             'Tobi',
             'Mr. White',
@@ -49,16 +49,10 @@ export class LotteryService {
         })
       );
 
-      this.lotteryStore.setActive('default');
+      this.lotteryStore.setActive(id);
     }
 
-    this.lotteryIDs$ = this.lotteriesQuery.lotteryIDs$.pipe(
-      map((id) => {
-        return id.map((entry) => {
-          return entry as string;
-        });
-      })
-    );
+    this.lotteryIDs$ = this.lotteriesQuery.lotteryIDs$;
 
     this.activeID$ = this.lotteriesQuery.selectActiveId().pipe(
       map((id) => {
@@ -152,9 +146,15 @@ export class LotteryService {
     this.lotteryStore.setActive(id);
   }
 
-  addLottery(id: string) {
+  addLottery(name: string) {
+    const id = guid();
     this.lotteryStore.add(
-      createLottery({ id: id, participants: [], previousWinners: [] })
+      createLottery({
+        id: id,
+        name: name,
+        participants: [],
+        previousWinners: [],
+      })
     );
     this.lotteryStore.setActive(id);
   }

@@ -60,8 +60,8 @@ export class AppComponent implements OnInit {
   }
 
   addLottery() {
-    const lotteryId = prompt('Please enter the lottery name');
-    this.lotteryService.addLottery(lotteryId);
+    const lotteryName = prompt('Please enter the lottery name');
+    this.lotteryService.addLottery(lotteryName);
   }
 
   openFile($event) {

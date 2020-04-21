@@ -110,8 +110,8 @@
           >
             <option
               *ngFor="let lotteryId of lotteryService.lotteryIDs$ | async"
-              [ngValue]="lotteryId"
-              >{{ lotteryId }}</option
+              [ngValue]="lotteryId.id"
+              >{{ lotteryId.name }}</option
             >
           </select>
         </div>

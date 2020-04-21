@@ -1,8 +1,8 @@
-import { QueryEntity } from '@datorama/akita';
-import { LotteryState, LotteryStore } from './lottery.store';
 import { Injectable } from '@angular/core';
+import { QueryEntity } from '@datorama/akita';
 import { map } from 'rxjs/operators';
-import { Lottery } from './lottery.entity';
+import { LotteryID } from './lottery.entity';
+import { LotteryState, LotteryStore } from './lottery.store';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ export class LotteriesQuery extends QueryEntity<LotteryState> {
   lotteryIDs$ = this.selectAll().pipe(
     map((entity) =>
       entity.map((entry) => {
-        return entry.id;
+        return { id: entry.id, name: entry.name } as LotteryID;
       })
     )
   );
