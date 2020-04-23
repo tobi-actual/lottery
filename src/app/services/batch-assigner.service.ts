@@ -61,9 +61,14 @@ export class BatchAssignerService {
     const activeLottery = this.lotteriesQuery.getActive();
 
     if (list.length > 0 && activeLottery) {
-      const currentMap = JSON.parse(
-        JSON.stringify(activeLottery.assignedTasks)
-      );
+      let currentMap;
+      if (activeLottery.assignedTasks) {
+        currentMap = JSON.parse(
+          JSON.stringify(activeLottery.assignedTasks)
+        ) as Tasks;
+      } else {
+        currentMap = new Tasks();
+      }
 
       for (var key in currentMap) {
         if (!list.includes(key)) {
