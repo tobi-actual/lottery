@@ -1,0 +1,60 @@
+<div class="row mt-1" [formGroup]="taskForm">
+  <div class="col-sm-6">
+    <div class="form-group">
+      <label for="tasks">Tasks</label>
+      <textarea
+        formControlName="tasks"
+        class="form-control"
+        id="tasks"
+        rows="5"
+        [attr.disabled]="(lotteryService.activeID$ | async) ? null : ''"
+      ></textarea>
+      <small class="form-text text-muted"
+        >Enter the tasks as a comma or new line separated list</small
+      >
+    </div>
+    <button
+      (click)="batchAssignerService.assignTasks(maxAssignmentsPerTask.value)"
+      [attr.disabled]="(lotteryService.activeID$ | async) ? null : ''"
+      type="button"
+      class="btn btn-outline-secondary mr-1"
+    >
+      Assign
+    </button>
+    <span class="mr-1">maximum</span>
+    <label class="sr-only" for="maxAssignmentsPerTask"
+      >Maximum assignments per task</label
+    >
+    <input
+      #maxAssignmentsPerTask
+      type="text"
+      class="form-control form-control-inline mr-1"
+      id="maxAssignmentsPerTask"
+      value="1"
+      type="number"
+    />
+    <span>per task</span>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="form-group">
+      <label for="assignedTasks">Assigned Tasks</label>
+
+      <div class="result mb-2" contenteditable="true">
+        <pre><code><div *ngFor="let task of batchAssignerService.assignedTasks$ | async">## {{ task.name }}
+
+<div *ngFor="let assignee of task.assignees">- [ ] {{ assignee }}</div>
+</div></code></pre>
+      </div>
+
+      <button
+        (click)="batchAssignerService.resetAssignments()"
+        [attr.disabled]="(lotteryService.activeID$ | async) ? null : ''"
+        type="button"
+        class="btn btn-outline-secondary mr-2"
+      >
+        Reset
+      </button>
+    </div>
+  </div>
+</div>

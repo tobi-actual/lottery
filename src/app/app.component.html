@@ -64,7 +64,7 @@
             [attr.disabled]="(lotteryService.activeID$ | async) ? null : ''"
           ></textarea>
           <small class="form-text text-muted"
-            >Enter the participants as a comma separated list</small
+            >Enter the participants as a comma or new line separated list</small
           >
         </div>
       </div>
@@ -94,6 +94,17 @@
         </div>
       </div>
     </div>
+
+    <ngb-accordion
+      #acc="ngbAccordion"
+      (panelChange)="lazyLoadBatchAssignerComponent($event)"
+    >
+      <ngb-panel title="Batch Assign PRs/Tasks/...">
+        <ng-template ngbPanelContent>
+          <ng-container #batchDesignerAnchor></ng-container>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
 
     <div class="row mt-5">
       <div class="col-sm-7">

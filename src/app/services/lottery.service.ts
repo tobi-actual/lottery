@@ -3,9 +3,10 @@ import { ID, snapshotManager, guid } from '@datorama/akita';
 import { saveAs } from 'file-saver';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, take } from 'rxjs/operators';
-import { createLottery, LotteryID } from '../state/lottery.entity';
+import { createLottery, LotteryID, Tasks } from '../state/lottery.entity';
 import { LotteriesQuery } from '../state/lottery.queries';
 import { LotteryStore } from '../state/lottery.store';
+import { convertStringToArray, convertArrayToString } from './utils';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +32,7 @@ export class LotteryService {
       this.lotteryStore.add(
         createLottery({
           id: id,
-          name: 'example',
+          name: 'Example',
           participants: [
             'Tobi',
             'Mr. White',
@@ -44,6 +45,7 @@ export class LotteryService {
             'Weber Max',
           ],
           previousWinners: [],
+          assignedTasks: {'Fix Everything': []},
         })
       );
 
@@ -61,14 +63,15 @@ export class LotteryService {
     this.activeParticipants$ = this.lotteriesQuery.selectActive().pipe(
       filter((x) => x !== undefined),
       map((lottery) => {
-        return this.convertArrayToString(lottery.participants);
+        return convertArrayToString(lottery.participants);
       }),
       distinctUntilChanged()
     );
+
     this.activePreviousWinners$ = this.lotteriesQuery.selectActive().pipe(
       filter((x) => x !== undefined),
       map((lottery) => {
-        return this.convertArrayToString(lottery.previousWinners);
+        return convertArrayToString(lottery.previousWinners);
       }),
       distinctUntilChanged()
     );
@@ -112,6 +115,8 @@ export class LotteryService {
       participants: newParticipants,
       previousWinners: newPreviousWinners,
     });
+
+    return winner;
   }
 
   resetLottery() {
@@ -154,6 +159,7 @@ export class LotteryService {
         name: lotteryName,
         participants: [],
         previousWinners: [],
+        assignedTasks: new Tasks(),
       })
     );
     this.lotteryStore.setActive(id);
@@ -194,25 +200,14 @@ export class LotteryService {
 
   updateParticipants(list: string) {
     this.lotteryStore.updateActive({
-      participants: this.convertStringToArray(list),
+      participants: convertStringToArray(list),
     });
   }
 
   updatePreviousWinners(list: string) {
     this.lotteryStore.updateActive({
-      previousWinners: this.convertStringToArray(list),
+      previousWinners: convertStringToArray(list),
     });
-  }
-
-  private convertStringToArray(list: string) {
-    const array = list.split(',').map((entry) => {
-      return entry.trim();
-    });
-    return array.filter(Boolean);
-  }
-
-  private convertArrayToString(list: string[]): string {
-    return list.join(', ');
   }
 
   exportState() {

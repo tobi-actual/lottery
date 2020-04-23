@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import {
+  Component,
+  ComponentFactoryResolver,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { debounceTime, map } from 'rxjs/operators';
+import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
+import { debounceTime } from 'rxjs/operators';
 import { LotteryService } from './services/lottery.service';
-import { Observable } from 'rxjs';
-import { ID } from '@datorama/akita';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +16,11 @@ import { ID } from '@datorama/akita';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  @ViewChild('batchDesignerAnchor', { read: ViewContainerRef })
+  batchDesignerAnchor: ViewContainerRef;
+
+  private componentLoaded: boolean = false;
+
   lotteryForm = this.formBuilder.group({
     participants: ['', { updateOn: 'blur' }],
     previousWinners: ['', { updateOn: 'blur' }],
@@ -20,7 +29,10 @@ export class AppComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    public lotteryService: LotteryService
+    public lotteryService: LotteryService,
+    // Lazy loading of component:
+    private viewContainerRef: ViewContainerRef,
+    private cfr: ComponentFactoryResolver // Lazy loading of module: // private compiler: Compiler, // private injector: Injector
   ) {}
 
   ngOnInit(): void {
@@ -57,6 +69,46 @@ export class AppComponent implements OnInit {
       .subscribe((value) => {
         this.lotteryService.updatePreviousWinners(value);
       });
+  }
+
+  async lazyLoadBatchAssignerComponent(event: NgbPanelChangeEvent) {
+    if (event.nextState) {
+      if (this.componentLoaded) {
+        return;
+      }
+      this.componentLoaded = true;
+
+      // Lazy loading component works as long as no Module with providers is needed.
+      // For other module imports, see the BatchAssignerComponent file
+
+      // Lazy load the component:
+      // this.batchDesignerAnchor.clear();
+      const { BatchAssignerComponent } = await import(
+        './components/batch-assigner/batch-assigner.component'
+      );
+      this.batchDesignerAnchor.createComponent(
+        this.cfr.resolveComponentFactory(BatchAssignerComponent)
+      );
+
+      // It is also possible to lazy load a whole module.
+      // const { BatchAssignerModule } = await import(
+      //   './components/batch-assigner/batchAssigner.module'
+      // );
+      // const { BatchAssignerComponent } = await import(
+      //   './components/batch-assigner/batch-assigner.component'
+      // );
+
+      // const moduleFactory =
+      //   BatchAssignerModule instanceof NgModuleFactory
+      //     ? BatchAssignerModule
+      //     : await this.compiler.compileModuleAsync(BatchAssignerModule);
+      // const moduleRef = moduleFactory.create(this.injector);
+      // const componentFactory = moduleRef.componentFactoryResolver.resolveComponentFactory(
+      //   BatchAssignerComponent
+      // );
+      // // this.batchDesignerAnchor.clear();
+      // this.batchDesignerAnchor.createComponent(componentFactory);
+    }
   }
 
   addLottery() {
