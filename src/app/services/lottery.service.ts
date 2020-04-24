@@ -50,7 +50,7 @@ export class LotteryService {
             'Weber Max',
           ],
           previousWinners: [],
-          assignedTasks: { 'Fix Everything': [] },
+          assignedTasks: { 'Fix Everything': [], '🚂': [], '🚀': [] },
         })
       );
 
