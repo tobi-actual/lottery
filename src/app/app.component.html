@@ -98,6 +98,7 @@
     <ngb-accordion
       #acc="ngbAccordion"
       (panelChange)="lazyLoadBatchAssignerComponent($event)"
+      [destroyOnHide]="false"
     >
       <ngb-panel title="Batch Assign PRs/Tasks/...">
         <ng-template ngbPanelContent>

@@ -82,7 +82,7 @@ export class AppComponent implements OnInit {
       // For other module imports, see the BatchAssignerComponent file
 
       // Lazy load the component:
-      // this.batchDesignerAnchor.clear();
+      this.batchDesignerAnchor.clear();
       const { BatchAssignerComponent } = await import(
         './components/batch-assigner/batch-assigner.component'
       );
