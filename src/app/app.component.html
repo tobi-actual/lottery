@@ -145,6 +145,14 @@
           </button>
 
           <button
+            (click)="lotteryService.duplicateLottery()"
+            type="button"
+            class="btn btn-outline-secondary mr-2 mb-2"
+          >
+            Duplicate
+          </button>
+
+          <button
             (click)="lotteryService.deleteActiveLottery()"
             type="button"
             class="btn btn-outline-danger mb-2"

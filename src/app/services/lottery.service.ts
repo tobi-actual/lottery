@@ -3,7 +3,12 @@ import { ID, snapshotManager, guid } from '@datorama/akita';
 import { saveAs } from 'file-saver';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, take } from 'rxjs/operators';
-import { createLottery, LotteryID, Tasks } from '../state/lottery.entity';
+import {
+  createLottery,
+  LotteryID,
+  Tasks,
+  Lottery,
+} from '../state/lottery.entity';
 import { LotteriesQuery } from '../state/lottery.queries';
 import { LotteryStore } from '../state/lottery.store';
 import { convertStringToArray, convertArrayToString } from './utils';
@@ -45,7 +50,7 @@ export class LotteryService {
             'Weber Max',
           ],
           previousWinners: [],
-          assignedTasks: {'Fix Everything': []},
+          assignedTasks: { 'Fix Everything': [] },
         })
       );
 
@@ -180,6 +185,34 @@ export class LotteryService {
     this.lotteryStore.updateActive({
       name: newName,
     });
+  }
+
+  duplicateLottery() {
+    const activeLottery = this.lotteriesQuery.getActive();
+
+    if (!activeLottery) {
+      return;
+    }
+
+    const duplicate = JSON.parse(JSON.stringify(activeLottery)) as Lottery;
+    duplicate.id = guid();
+
+    const currentEntries = this.lotteriesQuery.getAll();
+
+    for (let i = 0; i < 100; i++) {
+      duplicate.name = duplicate.name + ` Copy`;
+
+      const alreadyExists = currentEntries.find((entry) => {
+        return entry.name === duplicate.name;
+      });
+
+      if (!alreadyExists) {
+        // TODO: Use addLottery here:
+        this.lotteryStore.add(duplicate);
+        this.lotteryStore.setActive(duplicate.id);
+        break;
+      }
+    }
   }
 
   deleteActiveLottery() {
