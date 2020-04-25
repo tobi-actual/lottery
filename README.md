@@ -1,6 +1,8 @@
+![CI](https://github.com/tobi-actual/lottery/workflows/CI/badge.svg)
+
 # Lottery
 
-An Angular playground that is also a usable app.
+An Angular playground, that is also a usable app.
 
 ---
 
