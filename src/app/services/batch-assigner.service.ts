@@ -116,7 +116,7 @@ export class BatchAssignerService {
         let points = -length;
 
         if (!winner) {
-          winner = this.lotteryService.pickAWinner();
+          winner = this.lotteryService.pickAWinner(false);
         }
         if (!assignTasks[task].includes(winner)) {
           points++;

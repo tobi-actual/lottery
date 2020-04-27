@@ -82,7 +82,7 @@ export class LotteryService {
     );
   }
 
-  pickAWinner() {
+  pickAWinner(triggerCurrentWinners: boolean = true) {
     const activeLottery = this.lotteriesQuery.getActive();
 
     if (!activeLottery) {
@@ -112,9 +112,11 @@ export class LotteryService {
 
     const newPreviousWinners = [...previousWinners, winner];
 
-    const winners = this.currentWinners$.value;
-    winners.push(winner);
-    this.currentWinners$.next(winners);
+    if (triggerCurrentWinners) {
+      const winners = this.currentWinners$.value;
+      winners.push(winner);
+      this.currentWinners$.next(winners);
+    }
 
     this.lotteryStore.updateActive({
       participants: newParticipants,
