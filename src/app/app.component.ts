@@ -15,6 +15,7 @@ import { LotteryService } from './services/lottery.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
+let's break the build!!! ??
 export class AppComponent implements OnInit {
   @ViewChild('batchDesignerAnchor', { read: ViewContainerRef })
   batchDesignerAnchor: ViewContainerRef;
