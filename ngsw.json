@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1588018710166,
+  "timestamp": 1591880865716,
   "index": "/lottery/index.html",
   "assetGroups": [
     {
@@ -53,7 +53,7 @@
     "/lottery/assets/icons/icon-72x72.png": "0be3fc05d6f8f4ff2ab16991ecee20a5d05fe1dd",
     "/lottery/assets/icons/icon-96x96.png": "3dfc81d0364f0354f7860cdbf92765bbcaf53ad5",
     "/lottery/favicon.ico": "921f3a5ca2ac28660a93d9620879dd33544a8b44",
-    "/lottery/index.html": "8c89ea674747e07032e6bc785ef9c65e1d5261a7",
+    "/lottery/index.html": "530f82956675cb46bcf2c594ac6c387ddd39de80",
     "/lottery/main-es2015.e1a73c398b02f67dff8f.js": "7df479313274684a458ce6d28a0ac959f954d4f9",
     "/lottery/main-es5.e1a73c398b02f67dff8f.js": "cfe95daea7d37de0e3ca5f4eb1b4b009cfdf2b54",
     "/lottery/manifest.webmanifest": "d3651aded890199674d0ce1f0c4fce2ac4fce11b",
