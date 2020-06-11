@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1591881919262,
+  "timestamp": 1591882189890,
   "index": "/lottery/index.html",
   "assetGroups": [
     {
@@ -12,14 +12,14 @@
         "/lottery/5-es5.349e7107b382b42dc3fe.js",
         "/lottery/favicon.ico",
         "/lottery/index.html",
-        "/lottery/main-es2015.492d63602a5c30f52cc1.js",
-        "/lottery/main-es5.492d63602a5c30f52cc1.js",
+        "/lottery/main-es2015.25d3f48087b299a90190.js",
+        "/lottery/main-es5.25d3f48087b299a90190.js",
         "/lottery/manifest.webmanifest",
         "/lottery/polyfills-es2015.12dd4be351bc232e11d5.js",
         "/lottery/polyfills-es5.debbec494652001eca08.js",
         "/lottery/runtime-es2015.412f90377665c239b013.js",
         "/lottery/runtime-es5.412f90377665c239b013.js",
-        "/lottery/styles.3f9fad9a7c57d09f31cb.css"
+        "/lottery/styles.0fcf7e9a816dac40d13e.css"
       ],
       "patterns": []
     },
@@ -53,15 +53,15 @@
     "/lottery/assets/icons/icon-72x72.png": "0be3fc05d6f8f4ff2ab16991ecee20a5d05fe1dd",
     "/lottery/assets/icons/icon-96x96.png": "3dfc81d0364f0354f7860cdbf92765bbcaf53ad5",
     "/lottery/favicon.ico": "921f3a5ca2ac28660a93d9620879dd33544a8b44",
-    "/lottery/index.html": "f89c33e5a714c0a87ac7878d85707778ecb2dab0",
-    "/lottery/main-es2015.492d63602a5c30f52cc1.js": "e9e5207ae670e65814e1bf9bffa29b68f36ccc01",
-    "/lottery/main-es5.492d63602a5c30f52cc1.js": "48d940aa569ceb12e82011386af750bf5725b0bb",
+    "/lottery/index.html": "2fc6cb3a1a23839920cd4e697e14aefbc0ba0411",
+    "/lottery/main-es2015.25d3f48087b299a90190.js": "386aea20048e29599589d058b0ff2156e0fbd956",
+    "/lottery/main-es5.25d3f48087b299a90190.js": "a2fb254829cd73d882120e161c805ee2fd87bbde",
     "/lottery/manifest.webmanifest": "d3651aded890199674d0ce1f0c4fce2ac4fce11b",
     "/lottery/polyfills-es2015.12dd4be351bc232e11d5.js": "90fb474e1a7d87bd57bc8a95fb3fd361b919d815",
     "/lottery/polyfills-es5.debbec494652001eca08.js": "ccfff1a6bd0b9531245e25bf3c0c8cf948ced8c2",
     "/lottery/runtime-es2015.412f90377665c239b013.js": "e2b1e667d5e594d6d2cf8d81b7e77ef9c5c1ffc7",
     "/lottery/runtime-es5.412f90377665c239b013.js": "b31b8c9ef0dfb7276092f3348b9d2bb08a89ca8a",
-    "/lottery/styles.3f9fad9a7c57d09f31cb.css": "af9c0b808691accdaceeaf4231af7faf281c6017"
+    "/lottery/styles.0fcf7e9a816dac40d13e.css": "f65df7058dc84412972f073ad4f500d622c123a4"
   },
   "navigationUrls": [
     {
