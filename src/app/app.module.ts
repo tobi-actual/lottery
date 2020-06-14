@@ -13,7 +13,7 @@ import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    environment.production ? [] : AkitaNgDevtools.forRoot(),
+    environment.production ? [] : AkitaNgDevtools,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
     }),
