@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { BatchAssignerComponent } from './batch-assigner.component';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('BatchAssignerComponent', () => {
   let component: BatchAssignerComponent;
@@ -11,9 +13,9 @@ describe('BatchAssignerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BatchAssignerComponent ]
-    })
-    .compileComponents();
+      imports: [CommonModule, ReactiveFormsModule],
+      declarations: [BatchAssignerComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
